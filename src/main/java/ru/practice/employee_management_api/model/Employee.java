@@ -7,26 +7,31 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.NotNull;
+
 @Entity
 @Table(name = "employees")
-@Getter @Setter
+@Getter
+@Setter
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @NotNull
+    @Column(name = "name", nullable = true)
     private String name;
 
-    @Column(name = "surname", nullable = false)
+    @NotNull
+    @Column(name = "surname", nullable = true)
     private String surname;
 
-    @Column(name = "passport_number", nullable = false, unique = true)
+    @Column(name = "passport_number", nullable = true, unique = true)
     private String passportNumber;
 
-    @Column(name = "passport_date", nullable = false)
+    @Column(name = "passport_date", nullable = true)
     private LocalDate passportDate;
 
-    @Column(name = "salary", nullable = false)
+    @Column(name = "salary", nullable = true)
     private BigDecimal salary;
 }

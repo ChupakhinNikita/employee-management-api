@@ -11,35 +11,35 @@ import java.util.Optional;
 
 @Service
 public class EmployeeService {
+    private final EmployeeRepository employeeRepository;
+
     @Autowired
-    private EmployeeRepository employeeRepository;
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
     public Employee addEmployee(Employee employee) {
         return employeeRepository.save(employee);
     }
 
-    public Optional<Employee> getEmployeeById(Long id) {
-        return employeeRepository.findById(id);
+    public Employee getEmployeeById(Long id) {
+        return employeeRepository.findById(id).orElseGet(null);
     }
 
-    public Employee updateEmployeeSalary(Long id, BigDecimal salary) {
-        Optional<Employee> employeeOpt = employeeRepository.findById(id);
-        if (employeeOpt.isPresent()) {
-            Employee employee = employeeOpt.get();
-            employee.setSalary(salary);
-            return employeeRepository.save(employee);
-        }
-        return null;
+    public String updateEmployeeSalary(Long id, BigDecimal salary) {
+        Employee employee = new Employee();
+        employee.setId(id);
+        employee.setSalary(salary);
+        employeeRepository.save(employee);
+        return "Зарплата сотрудника успешно обновлена.";
     }
 
-    public Employee updateEmployeePassport(Long id, String passportNumber, LocalDate passportDate) {
-        Optional<Employee> employeeOpt = employeeRepository.findById(id);
-        if (employeeOpt.isPresent()) {
-            Employee employee = employeeOpt.get();
-            employee.setPassportNumber(passportNumber);
-            employee.setPassportDate(passportDate);
-            return employeeRepository.save(employee);
-        }
-        return null;
+    public String updateEmployeePassport(Long id, String passportNumber, LocalDate passportDate) {
+        Employee employee = new Employee();
+        employee.setId(id);
+        employee.setPassportNumber(passportNumber);
+        employee.setPassportDate(passportDate);
+        employeeRepository.save(employee);
+        return "Паспортные данные сотрудника успешно обновлены.";
     }
 }
