@@ -1,13 +1,13 @@
 package ru.practice.employee_management_api.service;
 
-import ru.practice.employee_management_api.model.Employee;
+import ru.practice.employee_management_api.dto.EmployeeDto;
+import ru.practice.employee_management_api.model.EmployeeEntity;
 import ru.practice.employee_management_api.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -18,28 +18,35 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public Employee addEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+    public EmployeeEntity addEmployee(EmployeeDto employee) {
+        return employeeRepository.save(EmployeeEntity.builder() //TODO Маппинг
+                .name(employee.getName())
+                .surname(employee.getSurname())
+                .passportNumber(employee.getPassportNumber())
+                .passportDate(employee.getPassportDate())
+                .salary(employee.getSalary())
+                .build());
     }
 
-    public Employee getEmployeeById(Long id) {
+
+    public EmployeeEntity getEmployeeById(Long id) {
         return employeeRepository.findById(id).orElseGet(null);
     }
 
     public String updateEmployeeSalary(Long id, BigDecimal salary) {
-        Employee employee = new Employee();
-        employee.setId(id);
-        employee.setSalary(salary);
-        employeeRepository.save(employee);
+        EmployeeEntity employeeEntity = new EmployeeEntity();
+        employeeEntity.setId(id);
+        employeeEntity.setSalary(salary);
+        employeeRepository.save(employeeEntity);
         return "Зарплата сотрудника успешно обновлена.";
     }
 
     public String updateEmployeePassport(Long id, String passportNumber, LocalDate passportDate) {
-        Employee employee = new Employee();
-        employee.setId(id);
-        employee.setPassportNumber(passportNumber);
-        employee.setPassportDate(passportDate);
-        employeeRepository.save(employee);
+        EmployeeEntity employeeEntity = new EmployeeEntity();
+        employeeEntity.setId(id);
+        employeeEntity.setPassportNumber(passportNumber);
+        employeeEntity.setPassportDate(passportDate);
+        employeeRepository.save(employeeEntity);
         return "Паспортные данные сотрудника успешно обновлены.";
     }
 }

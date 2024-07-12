@@ -1,7 +1,9 @@
 package ru.practice.employee_management_api.repository;
 
-import ru.practice.employee_management_api.model.Employee;
+import org.springframework.stereotype.Repository;
+import ru.practice.employee_management_api.model.EmployeeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+@Repository //TODO Аннотация
+public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> {
 }
