@@ -1,4 +1,4 @@
-# Employee Management API
+# Employee Management API - Java Spring + PostgreSQL
 
 ## Описание проекта
 
